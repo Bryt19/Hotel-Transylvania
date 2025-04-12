@@ -23,41 +23,41 @@
          .main-layout {
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensures the page takes at least 100% of the height */
+            min-height: 100vh; 
          }
 
          /* Light background color for navbar */
          .header {
-            background-color: #f1f1f1; /* Lighter gray for the navbar */
+            background-color: #f1f1f1; 
             padding: 20px 0;
-            border-bottom: 1px solid #ddd; /* Light border to define navbar */
+            border-bottom: 1px solid #ddd; 
          }
 
          .header .logo_section {
-            padding-left: 15px; /* Optional: Adjust for proper alignment */
+            padding-left: 15px; 
          }
 
          /* Container for Registration Section */
          .registration_section {
-            background-color: #f8f9fa; /* Light background for registration section */
+            background-color: #f8f9fa; 
             padding-top: 50px;
             padding-bottom: 50px;
-            margin-top: 45px; /* Space between navbar and registration container */
-            flex-grow: 1; /* Allow this section to expand and take remaining space */
+            margin-top: 45px; 
+            flex-grow: 1; 
          }
 
          .registration_form {
             background-color: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for visual distinction */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
          }
 
          /* Hover effect for the form */
          .registration_form:hover {
-            transform: translateY(-10px); /* Lifts the form when hovering */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+            transform: translateY(-10px); 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
          }
 
          .registration_form h2 {
@@ -68,7 +68,7 @@
 
          /* Footer Section */
          .footer {
-            background-color: #333; /* Dark background for footer */
+            background-color: #333; 
             color: white;
             padding: 20px 0;
             text-align: center;
@@ -121,7 +121,7 @@
                      <div class="full">
                         <div class="center-desk">
                            <div class="logo">
-                              <a href="index.html"><img src="images/h Logo.png" alt="#" /></a>
+                              <a href="registration.html"><img src="images/h Logo.png" alt="#" /></a>
                            </div>
                         </div>
                      </div>
@@ -165,7 +165,7 @@
                      <!-- Success or Error Message container -->
                      <div id="messageContainer" class="message"></div>
 
-                     <p class="text-center mt-3">Already have an account? <a href="login.html">Login here</a></p>
+                     <p class="text-center mt-3">Already have an account? <a href="index.html">Login here</a></p>
                   </div>
                </div>
             </div>
@@ -222,9 +222,9 @@
          const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[A-Za-z\d\W_]{8,}$/;
 
          // Handle registration
-         document.getElementById("registerForm").addEventListener("submit", function(e) {
+         document.getElementById("registerForm").addEventListener("submit", function (e) {
             e.preventDefault(); // Prevent default form submission
-            
+
             // Get form values
             var name = document.getElementById("name").value;
             var email = document.getElementById("email").value;
@@ -234,6 +234,16 @@
             // Clear any previous messages
             var messageContainer = document.getElementById("messageContainer");
             messageContainer.innerHTML = '';
+
+            // Check if email already exists in localStorage
+            var existingUser = JSON.parse(localStorage.getItem("user"));
+            if (existingUser && existingUser.email === email) {
+                var warningMessage = document.createElement("div");
+                warningMessage.classList.add("error-message");
+                warningMessage.innerHTML = "An account already exists with this email address!";
+                messageContainer.appendChild(warningMessage);
+                return;
+            }
 
             // Validate password match
             if (password !== confirmPassword) {
@@ -269,8 +279,8 @@
             successMessage.innerHTML = "Registration successful! Redirecting to login...";
             messageContainer.appendChild(successMessage);
 
-            setTimeout(function() {
-                window.location.href = "login.html"; // Redirect to login page after 3 seconds
+            setTimeout(function () {
+                window.location.href = "index.html"; // Redirect to login page after 3 seconds
             }, 3000); // 3 seconds delay
          });
       </script>
