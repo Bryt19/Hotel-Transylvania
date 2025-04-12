@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('./images/b\ room.jpg'); /* Same background as homepage */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            color: #000;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo {
+            max-width: 150px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .navbar .back-btn {
+            position: absolute;
+            left: 20px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .back-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Confirmation Page Styling */
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;  /* Increased width of the container */
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px); /* Slightly lift on hover */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+        }
+
+        .container h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .container p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .go-home-btn, .download-receipt-btn {
+            width: 48%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .go-home-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .go-home-btn:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+        }
+
+        .download-receipt-btn {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        .download-receipt-btn:hover {
+            background-color: #e0a800;
+            transform: translateY(-3px);
+        }
+
+        /* Footer Styles */
+        .footer {
+            width: 100%;
+            padding: 20px 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            font-size: 1rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar with Back Button -->
+    <div class="navbar">
+        <button class="back-btn" onclick="window.location.href='booking.html';">← Back to Booking</button>
+        <img src="./images/Yellow Logo.png" alt="Hotel Transylvania" class="logo">
+    </div>
+
+    <!-- Confirmation Content Area -->
+    <div class="content-wrapper">
+        <div class="container">
+            <h2>Booking Confirmation</h2>
+            <p><strong>Booking ID:</strong> <span id="bookingID"></span></p>
+            <p><strong>Room Type:</strong> <span id="roomType"></span></p>
+            <p><strong>Arrival Date:</strong> <span id="arrivalDate"></span></p>
+            <p><strong>Departure Date:</strong> <span id="departureDate"></span></p>
+
+            <div class="button-container">
+                <!-- Back to Homepage Button -->
+                <button class="go-home-btn" onclick="window.location.href='index.html';">Back to Homepage</button>
+                <!-- Download Receipt Button -->
+                <button class="download-receipt-btn" onclick="downloadReceipt();">Download Receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Hotel Transylvania. All rights reserved.</p>
+    </div>
+
+    <!-- jsPDF CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        // Retrieve the stored booking details from localStorage
+        const roomType = localStorage.getItem('roomType');
+        const arrivalDate = localStorage.getItem('arrivalDate');
+        const departureDate = localStorage.getItem('departureDate');
+
+        // Generate a random booking ID (in a real application, this would be generated on the server)
+        const bookingID = 'BOOK' + Math.floor(Math.random() * 1000000);
+
+        // Populate the confirmation page with booking details
+        document.getElementById('bookingID').textContent = bookingID;
+        document.getElementById('roomType').textContent = roomType;
+        document.getElementById('arrivalDate').textContent = arrivalDate;
+        document.getElementById('departureDate').textContent = departureDate;
+
+        // Function to download the receipt as a PDF file
+        function downloadReceipt() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add booking details (no image this time)
+            doc.setFontSize(16);
+            doc.text('Booking Confirmation', 50, 30);
+
+            doc.setFontSize(12);
+            doc.text(`Booking ID: ${bookingID}`, 20, 50);
+            doc.text(`Room Type: ${roomType}`, 20, 60);
+            doc.text(`Arrival Date: ${arrivalDate}`, 20, 70);
+            doc.text(`Departure Date: ${departureDate}`, 20, 80);
+
+            // Save the PDF
+            doc.save(`receipt_${bookingID}.pdf`);
+        }
+    </script>
+
+</body>
+</html>

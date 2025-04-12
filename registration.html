@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <title>Hotel Transylvania | Registration</title>
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/responsive.css">
+      <link rel="icon" href="images/fevicon.png" type="image/gif" />
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <style>
+         /* Basic styles for the layout */
+         html, body {
+            height: 100%; /* Full height for the page */
+            margin: 0;
+         }
+
+         /* Flexbox container to push footer to the bottom */
+         .main-layout {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures the page takes at least 100% of the height */
+         }
+
+         /* Light background color for navbar */
+         .header {
+            background-color: #f1f1f1; /* Lighter gray for the navbar */
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd; /* Light border to define navbar */
+         }
+
+         .header .logo_section {
+            padding-left: 15px; /* Optional: Adjust for proper alignment */
+         }
+
+         /* Container for Registration Section */
+         .registration_section {
+            background-color: #f8f9fa; /* Light background for registration section */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            margin-top: 45px; /* Space between navbar and registration container */
+            flex-grow: 1; /* Allow this section to expand and take remaining space */
+         }
+
+         .registration_form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for visual distinction */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+         }
+
+         /* Hover effect for the form */
+         .registration_form:hover {
+            transform: translateY(-10px); /* Lifts the form when hovering */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+         }
+
+         .registration_form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+         }
+
+         /* Footer Section */
+         .footer {
+            background-color: #333; /* Dark background for footer */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+         }
+
+         .footer p a {
+            color: #e74c3c;
+         }
+
+         .footer p a:hover {
+            text-decoration: underline;
+         }
+
+         /* Eye icon styling */
+         .password-container {
+            position: relative;
+         }
+
+         .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 76%;
+            transform: translateY(-50%);
+            cursor: pointer;
+         }
+
+         /* Success and Error Message Styling */
+         .message {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+         }
+
+         .success-message {
+            color: green;
+         }
+
+         .error-message {
+            color: red;
+         }
+      </style>
+   </head>
+   <body class="main-layout">
+      <!-- Navbar (Header) -->
+      <header>
+         <div class="header">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                     <div class="full">
+                        <div class="center-desk">
+                           <div class="logo">
+                              <a href="index.html"><img src="images/h Logo.png" alt="#" /></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+
+      <!-- Registration Section -->
+      <section class="registration_section">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-md-8">
+                  <div class="registration_form">
+                     <h2>Create an Account</h2>
+
+                     <!-- Form -->
+                     <form id="registerForm">
+                        <div class="form-group">
+                           <label for="name">Full Name:</label>
+                           <input type="text" class="form-control" id="name" placeholder="Enter your full name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                           <label for="email">Email:</label>
+                           <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+                        </div>
+                        <div class="form-group password-container">
+                           <label for="password">Password:</label>
+                           <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password" required>
+                           <i class="fa fa-eye eye-icon" id="togglePassword" onclick="togglePassword()"></i>
+                        </div>
+                        <div class="form-group password-container">
+                           <label for="confirm_password">Confirm Password:</label>
+                           <input type="password" class="form-control" id="confirm_password" placeholder="Confirm your password" name="confirm_password" required>
+                           <i class="fa fa-eye eye-icon" id="toggleConfirmPassword" onclick="toggleConfirmPassword()"></i>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-block">Register</button>
+                     </form>
+
+                     <!-- Success or Error Message container -->
+                     <div id="messageContainer" class="message"></div>
+
+                     <p class="text-center mt-3">Already have an account? <a href="login.html">Login here</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Footer Section -->
+      <footer>
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <p>© 2025 All Rights Reserved. Design by <a href="https://www.instagram.com/jiggy_soul/">jiGGy_soul</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+
+      <!-- Scripts -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script>
+         // Toggle password visibility
+         function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var icon = document.getElementById("togglePassword");
+            if (passwordField.type === "password") {
+               passwordField.type = "text";
+               icon.classList.remove("fa-eye");
+               icon.classList.add("fa-eye-slash");
+            } else {
+               passwordField.type = "password";
+               icon.classList.remove("fa-eye-slash");
+               icon.classList.add("fa-eye");
+            }
+         }
+
+         function toggleConfirmPassword() {
+            var confirmPasswordField = document.getElementById("confirm_password");
+            var icon = document.getElementById("toggleConfirmPassword");
+            if (confirmPasswordField.type === "password") {
+               confirmPasswordField.type = "text";
+               icon.classList.remove("fa-eye");
+               icon.classList.add("fa-eye-slash");
+            } else {
+               confirmPasswordField.type = "password";
+               icon.classList.remove("fa-eye-slash");
+               icon.classList.add("fa-eye");
+            }
+         }
+
+         // Password Validation Regex
+         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[A-Za-z\d\W_]{8,}$/;
+
+         // Handle registration
+         document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Get form values
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+
+            // Clear any previous messages
+            var messageContainer = document.getElementById("messageContainer");
+            messageContainer.innerHTML = '';
+
+            // Validate password match
+            if (password !== confirmPassword) {
+                var errorMessage = document.createElement("div");
+                errorMessage.classList.add("error-message");
+                errorMessage.innerHTML = "Passwords do not match!";
+                messageContainer.appendChild(errorMessage);
+                return;
+            }
+
+            // Validate password strength
+            if (!passwordRegex.test(password)) {
+                var errorMessage = document.createElement("div");
+                errorMessage.classList.add("error-message");
+                errorMessage.innerHTML = "Password must be at least 8 characters long, contain a capital letter, a number, and a symbol.";
+                messageContainer.appendChild(errorMessage);
+                return;
+            }
+
+            // Create user object
+            var user = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            // Store user in localStorage
+            localStorage.setItem("user", JSON.stringify(user));
+
+            // Display success message and redirect to login page after a short delay
+            var successMessage = document.createElement("div");
+            successMessage.classList.add("success-message");
+            successMessage.innerHTML = "Registration successful! Redirecting to login...";
+            messageContainer.appendChild(successMessage);
+
+            setTimeout(function() {
+                window.location.href = "login.html"; // Redirect to login page after 3 seconds
+            }, 3000); // 3 seconds delay
+         });
+      </script>
+   </body>
+</html>

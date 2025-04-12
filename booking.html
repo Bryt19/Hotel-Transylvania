@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('./images/v\ b.jpg'); /* Same background as homepage */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: center; /* Center the content */
+            align-items: center;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            color: #000;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Logo Styles */
+        .navbar .logo {
+            max-width: 150px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        /* Navbar Title */
+        .navbar h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* Main Content Area */
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select, input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            background-color: #f7f7f7;
+            transition: all 0.3s ease-in-out;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="date"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .go-home-btn, .view-booking-btn {
+            width: 48%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .go-home-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .go-home-btn:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+        }
+
+        .view-booking-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .view-booking-btn:hover {
+            background-color: #5a6268;
+            transform: translateY(-3px);
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #d9534f;
+        }
+
+        .valid {
+            color: #28a745;
+        }
+
+        /* Footer Styles */
+        .footer {
+            width: 100%;
+            padding: 20px 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            font-size: 1rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar h1 {
+                margin-left: 0;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <img src="./images/h Logo.png" alt="Hotel Transylvania" class="logo">
+    </div> 
+
+    <!-- Main Content Area -->
+    <div class="content-wrapper">
+        <div class="container">
+            <h2>Book Your Room</h2>
+            <form id="bookingForm" onsubmit="return handleBooking(event)">
+                <!-- Room Type Input -->
+                <label for="roomType">Room Type</label>
+                <select id="roomType" name="roomType" required>
+                    <option selected disabled>Select Your Room Type</option>
+                    <option value="Standard Room">Standard Room</option>
+                    <option value="Twin Room">Twin Room</option>
+                    <option value="Presidential Suite">Presidential Suite</option>
+                    <option value="Deluxe Room">Deluxe Room</option>
+                    <option value="Penthouse Suite">Penthouse Suite</option>
+                    <option value="Accessible Room">Accessible Room</option>
+                </select>
+
+                <!-- Arrival Date Input -->
+                <label for="arrivalDate">Arrival Date</label>
+                <input type="date" id="arrivalDate" name="arrivalDate" required>
+
+                <!-- Departure Date Input -->
+                <label for="departureDate">Departure Date</label>
+                <input type="date" id="departureDate" name="departureDate" required>
+
+                <!-- Submit Button -->
+                <input type="submit" value="Confirm Booking">
+                <div id="message" class="message"></div>
+
+                <!-- Button container for side by side buttons -->
+                <div class="button-container">
+                    <button type="button" class="go-home-btn" style="display:none;" onclick="window.location.href='index.html';">Back to Homepage</button>
+                    <button type="button" class="view-booking-btn" style="display:none;" onclick="window.location.href='confirmation.html';">View Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Handle the booking form
+        function handleBooking(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get the values from the form
+            const roomType = document.getElementById('roomType').value.trim();
+            const arrivalDate = document.getElementById('arrivalDate').value;
+            const departureDate = document.getElementById('departureDate').value;
+            const messageDiv = document.getElementById('message');
+            const goHomeButton = document.querySelector('.go-home-btn');
+            const viewBookingButton = document.querySelector('.view-booking-btn');
+            const confirmButton = document.querySelector('input[type="submit"]');
+
+            // Clear previous validation message
+            messageDiv.textContent = "";
+
+            // Validate if all fields are filled
+            if (!roomType || !arrivalDate || !departureDate) {
+                messageDiv.textContent = "Please fill out all required fields.";
+                messageDiv.className = "message";
+                return;
+            }
+
+            // Check if arrival date is before departure date
+            if (new Date(arrivalDate) > new Date(departureDate)) {
+                messageDiv.textContent = "Arrival date cannot be after departure date.";
+                messageDiv.className = "message";
+                return;
+            }
+
+            // Store the booking details in localStorage
+            localStorage.setItem('roomType', roomType);
+            localStorage.setItem('arrivalDate', arrivalDate);
+            localStorage.setItem('departureDate', departureDate);
+
+            // Display a success message
+            messageDiv.textContent = `Booking confirmed! ${roomType} from ${arrivalDate} to ${departureDate}.`;
+            messageDiv.className = "valid"; // Success message
+
+            // Hide the "Confirm Booking" button and show the "Back to Homepage" and "View Booking" buttons
+            confirmButton.style.display = "none";
+            goHomeButton.style.display = "block";
+            viewBookingButton.style.display = "block";
+        }
+    </script>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Hotel Transylvania. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
